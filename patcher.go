@@ -2,7 +2,8 @@ package update
 
 import (
 	"io"
-	"update/internal/binarydist"
+
+	"github.com/HimawariSunFlower/go-update/internal/binarydist"
 )
 
 // Patcher defines an interface for applying binary patches to an old item to get an updated item.

@@ -12,7 +12,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"update/internal/osext"
+	"github.com/HimawariSunFlower/go-update/internal/osext"
 )
 
 var (

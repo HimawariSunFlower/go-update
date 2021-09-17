@@ -12,7 +12,7 @@ import (
 	"os"
 	"testing"
 
-	"update/internal/binarydist"
+	"github.com/HimawariSunFlower/go-update/internal/binarydist"
 )
 
 var (

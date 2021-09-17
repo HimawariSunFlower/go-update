@@ -164,11 +164,11 @@ func Apply(update io.Reader, opts Options) error {
 		errRemove := os.Remove(oldPath)
 
 		// windows has trouble with removing old binaries, so hide it instead
+		// if errRemove != nil {
+		// 	err = hideFile(oldPath)
+		// }
 		if errRemove != nil {
-			err = hideFile(oldPath)
-		}
-		if err != nil {
-			return err
+			return errRemove
 		}
 	}
 

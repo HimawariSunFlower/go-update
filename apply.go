@@ -132,7 +132,7 @@ func Apply(update io.Reader, opts Options) error {
 	// delete any existing old exec file - this is necessary on Windows for two reasons:
 	// 1. after a successful update, Windows can't remove the .old file because the process is still running
 	// 2. windows rename operations fail if the destination file already exists
-	_ = os.Remove(oldPath)
+	_ = os.Remove(oldPath) //这里删不掉,自删除使用cmd.exe吊起延时自启动时删除old
 
 	// move the existing executable to a new file in the same directory
 	err = os.Rename(opts.TargetPath, oldPath)
@@ -161,14 +161,14 @@ func Apply(update io.Reader, opts Options) error {
 
 	// move successful, remove the old binary if needed
 	if removeOld {
-		errRemove := os.Remove(oldPath)
+		errRemove := os.Remove(oldPath) //这里也删不掉
 
 		// windows has trouble with removing old binaries, so hide it instead
-		// if errRemove != nil {
-		// 	err = hideFile(oldPath)
-		// }
 		if errRemove != nil {
-			return errRemove
+			err = hideFile(oldPath)
+		}
+		if err != nil {
+			return err
 		}
 	}
 

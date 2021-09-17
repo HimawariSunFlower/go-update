@@ -132,13 +132,14 @@ func Apply(update io.Reader, opts Options) error {
 	// delete any existing old exec file - this is necessary on Windows for two reasons:
 	// 1. after a successful update, Windows can't remove the .old file because the process is still running
 	// 2. windows rename operations fail if the destination file already exists
-	err = os.Remove(oldPath)
+
+	// move the existing executable to a new file in the same directory
+	err = os.Rename(opts.TargetPath, oldPath)
 	if err != nil {
 		return err
 	}
 
-	// move the existing executable to a new file in the same directory
-	err = os.Rename(opts.TargetPath, oldPath)
+	err = os.Remove(oldPath)
 	if err != nil {
 		return err
 	}

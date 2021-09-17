@@ -134,8 +134,7 @@ func Apply(update io.Reader, opts Options) error {
 	// 2. windows rename operations fail if the destination file already exists
 	err = os.Remove(oldPath)
 	if err != nil {
-		err = nil
-		removeOld = true
+		return err
 	}
 
 	// move the existing executable to a new file in the same directory
@@ -164,17 +163,17 @@ func Apply(update io.Reader, opts Options) error {
 	}
 
 	// move successful, remove the old binary if needed
-	if removeOld {
-		errRemove := os.Remove(oldPath)
+	// if removeOld {
+	// 	errRemove := os.Remove(oldPath)
 
-		// windows has trouble with removing old binaries, so hide it instead
-		// if errRemove != nil {
-		// 	err = hideFile(oldPath)
-		// }
-		if errRemove != nil {
-			return errRemove
-		}
-	}
+	// 	// windows has trouble with removing old binaries, so hide it instead
+	// 	// if errRemove != nil {
+	// 	// 	err = hideFile(oldPath)
+	// 	// }
+	// 	if errRemove != nil {
+	// 		return errRemove
+	// 	}
+	// }
 
 	return nil
 }
